@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuesta — Taller de Introducción a la IA | Zuriel Sistemas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =============================================
+       DESIGN TOKENS — Zuriel Sistemas DESIGN.md
+       ============================================= */
+    :root {
+      /* Paleta oficial Zuriel */
+      --color-base:        #FFFCF2;   /* Blanco cálido — fondo dominante */
+      --color-text:        #252422;   /* Casi negro cálido */
+      --color-text-secondary: #403D39;
+      --color-border:      #CCC5B9;
+      --color-accent:      #EB5E28;   /* Naranja quemado */
+      --color-accent-hover:#D4521F;
+      --color-hero-bg:     #252422;
+      --color-surface:     #F5F0E8;   /* Superficie alternada cálida */
+
+      /* Tipografía */
+      --font-display: 'Playfair Display', 'Georgia', serif;
+      --font-body:    'Inter', 'system-ui', sans-serif;
+
+      /* Espaciado (múltiplos de 8px) */
+      --sp-xs:  8px;
+      --sp-sm:  16px;
+      --sp-md:  24px;
+      --sp-lg:  40px;
+      --sp-xl:  64px;
+      --sp-xxl: 96px;
+
+      /* Elevación */
+      --shadow-card:    0 2px 12px rgba(37,36,34,0.08);
+      --shadow-elevated:0 8px 24px rgba(37,36,34,0.12);
+
+      /* Radio */
+      --radius:    8px;
+      --radius-lg: 12px;
+    }
+
+    /* =============================================
+       RESET & BASE
+       ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--color-base);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =============================================
+       UTILIDADES GLOBALES
+       ============================================= */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 var(--sp-lg);
+    }
+
+    .accent-line {
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--color-accent);
+      border-radius: 2px;
+      margin-bottom: var(--sp-sm);
+    }
+
+    .label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    /* =============================================
+       SECCIÓN: PORTADA
+       ============================================= */
+    .cover {
+      background: var(--color-hero-bg);
+      color: var(--color-base);
+      padding: var(--sp-xxl) var(--sp-lg) var(--sp-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Patrón decorativo de fondo */
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      border: 1px solid rgba(235,94,40,0.12);
+      pointer-events: none;
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      border: 1px solid rgba(235,94,40,0.18);
+      pointer-events: none;
+    }
+
+    .cover-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-logo {
+      margin-bottom: var(--sp-xl);
+    }
+
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-xs);
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--color-accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-text {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--color-base);
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--color-border);
+      display: block;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: rgba(235,94,40,0.15);
+      border: 1px solid rgba(235,94,40,0.3);
+      color: #FF8A65;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-bottom: var(--sp-md);
+    }
+
+    .cover-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--color-base);
+      margin-bottom: var(--sp-sm);
+      max-width: 680px;
+    }
+
+    .cover-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(16px, 2.5vw, 22px);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--color-border);
+      margin-bottom: var(--sp-lg);
+      max-width: 560px;
+    }
+
+    .cover-purpose {
+      font-size: 15px;
+      color: #9E9A94;
+      font-style: italic;
+      border-left: 3px solid var(--color-accent);
+      padding-left: var(--sp-sm);
+      margin-bottom: var(--sp-xl);
+      max-width: 480px;
+    }
+
+    .cover-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-lg);
+      padding-top: var(--sp-lg);
+      border-top: 1px solid rgba(204,197,185,0.2);
+    }
+
+    .cover-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cover-meta-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9E9A94;
+    }
+
+    .cover-meta-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-base);
+    }
+
+    /* =============================================
+       SECCIÓN: CUERPO — layout general
+       ============================================= */
+    .section {
+      padding: var(--sp-xl) 0;
+    }
+
+    .section + .section {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .section--shaded {
+      background: var(--color-surface);
+      padding: var(--sp-xl) var(--sp-lg);
+      border-radius: var(--radius-lg);
+      margin: var(--sp-xl) auto;
+      max-width: 860px;
+    }
+
+    .section-header {
+      margin-bottom: var(--sp-lg);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--color-text);
+    }
+
+    .section-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--color-text-secondary);
+      max-width: 700px;
+    }
+
+    .section-body p + p {
+      margin-top: var(--sp-sm);
+    }
+
+    /* =============================================
+       FRAMING CALLOUT
+       ============================================= */
+    .callout {
+      background: var(--color-hero-bg);
+      color: var(--color-base);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-lg) var(--sp-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .callout::before {
+      content: '';
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 1px solid rgba(235,94,40,0.15);
+      pointer-events: none;
+    }
+
+    .callout-text {
+      font-family: var(--font-display);
+      font-size: clamp(17px, 2.2vw, 21px);
+      font-style: italic;
+      line-height: 1.6;
+      color: #E0DBD2;
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+    }
+
+    .callout-text strong {
+      color: #FF8A65;
+      font-style: normal;
+    }
+
+    /* =============================================
+       BLOQUES DEL TALLER — TABLA / CARDS HORARIO
+       ============================================= */
+    .schedule-grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-xs);
+      margin-top: var(--sp-md);
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: var(--sp-sm);
+      align-items: start;
+      background: var(--color-base);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--sp-sm) var(--sp-md);
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .schedule-row:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-card);
+    }
+
+    .schedule-row--break {
+      background: var(--color-surface);
+      border-style: dashed;
+    }
+
+    .schedule-time {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-accent);
+      padding-top: 2px;
+      white-space: nowrap;
+    }
+
+    .schedule-content-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-border);
+      margin-bottom: 2px;
+    }
+
+    .schedule-content-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    /* =============================================
+       HERRAMIENTAS — GRID DE CATEGORÍAS (legacy, usado en tools-note)
+       ============================================= */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-sm);
+      margin-top: var(--sp-md);
+    }
+
+    .tool-card {
+      background: var(--color-base);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--sp-md);
+      box-shadow: var(--shadow-card);
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .tool-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .tool-card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-xs);
+      margin-bottom: var(--sp-xs);
+    }
+
+    .tool-card-icon {
+      width: 32px;
+      height: 32px;
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    .tool-card-category {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+    }
+
+    .tool-card-items {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .tools-note {
+      margin-top: var(--sp-md);
+      padding: var(--sp-sm) var(--sp-md);
+      background: rgba(235,94,40,0.06);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      font-style: italic;
+    }
+
+    /* =============================================
+       LUZIA — SECCIÓN ESPECIAL
+       ============================================= */
+    .luzia-card {
+      background: linear-gradient(135deg, #252422, #403D39);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-lg) var(--sp-xl);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: var(--sp-lg);
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .luzia-card::after {
+      content: '';
+      position: absolute;
+      right: -60px;
+      bottom: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 1px solid rgba(235,94,40,0.2);
+      pointer-events: none;
+    }
+
+    .luzia-icon-wrap {
+      width: 80px;
+      height: 80px;
+      background: rgba(235,94,40,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .luzia-icon-wrap svg {
+      width: 40px;
+      height: 40px;
+      color: var(--color-accent);
+    }
+
+    .luzia-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .luzia-name {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--color-base);
+      margin-bottom: 4px;
+    }
+
+    .luzia-tagline {
+      font-size: 13px;
+      color: var(--color-border);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: var(--sp-sm);
+    }
+
+    .luzia-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-xs);
+    }
+
+    .luzia-bullets li {
+      font-size: 14px;
+      color: #C8C2B8;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .luzia-bullets li::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      min-width: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      margin-top: 7px;
+    }
+
+    /* =============================================
+       PERSONALIZACIÓN — LISTA CON ICONO
+       ============================================= */
+    .custom-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-sm);
+      margin-top: var(--sp-md);
+    }
+
+    .custom-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-sm);
+      font-size: 15px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .custom-list li svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-accent);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    /* =============================================
+       CIERRE TEMÁTICO
+       ============================================= */
+    .close-callout {
+      margin-top: var(--sp-lg);
+      padding: var(--sp-md) var(--sp-lg);
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      border-left: 4px solid var(--color-accent);
+    }
+
+    .close-callout p {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 17px;
+      color: var(--color-text);
+      line-height: 1.65;
+    }
+
+    /* =============================================
+       INVERSIÓN — CARD PROMINENTE
+       ============================================= */
+    .investment-card {
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: var(--sp-md);
+    }
+
+    .investment-header {
+      background: var(--color-hero-bg);
+      padding: var(--sp-md) var(--sp-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .investment-header-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-base);
+    }
+
+    .investment-header-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      border: 1px solid rgba(235,94,40,0.4);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    .investment-body {
+      padding: var(--sp-lg);
+      background: var(--color-base);
+    }
+
+    .investment-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-sm);
+      margin-bottom: var(--sp-md);
+    }
+
+    .investment-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .investment-field-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-border);
+    }
+
+    .investment-field-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text);
+      padding: 10px var(--sp-sm);
+      background: var(--color-surface);
+      border: 1px dashed var(--color-border);
+      border-radius: 6px;
+      min-height: 44px;
+    }
+
+    .investment-field-value--amount {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-accent);
+    }
+
+    .investment-includes {
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--sp-md);
+      margin-top: var(--sp-sm);
+    }
+
+    .investment-includes-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--sp-sm);
+    }
+
+    .includes-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-xs);
+    }
+
+    .includes-tag {
+      background: rgba(235,94,40,0.07);
+      border: 1px solid rgba(235,94,40,0.22);
+      color: var(--color-accent);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .investment-note {
+      margin-top: var(--sp-md);
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      gap: var(--sp-xs);
+    }
+
+    .investment-note svg {
+      width: 16px;
+      height: 16px;
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    /* =============================================
+       PRÓXIMOS PASOS
+       ============================================= */
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-sm);
+      margin-top: var(--sp-md);
+      counter-reset: step-counter;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-md);
+      padding: var(--sp-sm) var(--sp-md);
+      background: var(--color-base);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      counter-increment: step-counter;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .step-item:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-card);
+      cursor: default;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background: var(--color-hero-bg);
+      color: var(--color-base);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .step-number::after {
+      content: counter(step-counter);
+    }
+
+    .step-text {
+      padding-top: 9px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+
+    /* =============================================
+       PIE DE PÁGINA
+       ============================================= */
+    .footer {
+      background: var(--color-hero-bg);
+      color: var(--color-base);
+      padding: var(--sp-xl) var(--sp-lg);
+      margin-top: var(--sp-xl);
+    }
+
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--sp-lg);
+      align-items: center;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      margin-bottom: var(--sp-sm);
+    }
+
+    .footer-brand-name {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-base);
+    }
+
+    .footer-brand-tagline {
+      font-size: 12px;
+      color: var(--color-border);
+      letter-spacing: 0.06em;
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .footer-contact a,
+    .footer-contact span {
+      font-size: 13px;
+      color: #9E9A94;
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+
+    .footer-contact a:hover {
+      color: var(--color-accent);
+    }
+
+    .footer-location {
+      text-align: right;
+    }
+
+    .footer-location span {
+      font-size: 12px;
+      color: #9E9A94;
+      display: block;
+    }
+
+    /* =============================================
+       SEPARADORES DECORATIVOS
+       ============================================= */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      margin: var(--sp-xl) 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .divider-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+
+    /* =============================================
+       ESCALERA DE COMUNICACIÓN — NIVELES
+       ============================================= */
+    .comm-levels {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-sm);
+      margin-top: var(--sp-md);
+    }
+
+    .comm-level-card {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-md);
+      background: var(--color-base);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--sp-md);
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .comm-level-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-card);
+    }
+
+    .comm-level-number {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      background: var(--color-hero-bg);
+      color: var(--color-base);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .comm-level-card:nth-child(1) .comm-level-number { background: rgba(37,36,34,0.6); }
+    .comm-level-card:nth-child(2) .comm-level-number { background: rgba(37,36,34,0.8); }
+    .comm-level-card:nth-child(3) .comm-level-number { background: var(--color-accent); }
+
+    .comm-level-body {
+      flex: 1;
+    }
+
+    .comm-level-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 6px;
+    }
+
+    .comm-level-desc {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+    }
+
+    /* =============================================
+       TRIADA CONCEPTUAL — Modelo / Agente / Herramienta
+       ============================================= */
+    .triad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-sm);
+      margin-top: var(--sp-md);
+      margin-bottom: var(--sp-lg);
+    }
+
+    .triad-card {
+      background: var(--color-base);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--sp-md);
+      text-align: center;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .triad-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-card);
+    }
+
+    .triad-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto var(--sp-xs);
+      background: rgba(235,94,40,0.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .triad-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-accent);
+    }
+
+    .triad-term {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 4px;
+    }
+
+    .triad-arrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 6px;
+    }
+
+    .triad-desc {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.55;
+    }
+
+    .triad-example {
+      font-size: 11px;
+      color: var(--color-border);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .triad-insight {
+      margin-top: var(--sp-md);
+      padding: var(--sp-sm) var(--sp-md);
+      background: var(--color-hero-bg);
+      border-radius: var(--radius);
+      font-size: 14px;
+      color: #E0DBD2;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .triad-insight strong {
+      color: #FF8A65;
+      font-style: normal;
+    }
+
+    /* =============================================
+       HERRAMIENTAS EN CAPAS
+       ============================================= */
+    .tools-layers {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-md);
+      margin-top: var(--sp-md);
+    }
+
+    .tools-layer {
+      background: var(--color-base);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .tools-layer:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-card);
+    }
+
+    .tools-layer-header {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      padding: var(--sp-sm) var(--sp-md);
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tools-layer-num {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      background: var(--color-hero-bg);
+      color: var(--color-base);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .tools-layer-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text);
+    }
+
+    .tools-layer-body {
+      padding: var(--sp-md);
+    }
+
+    .tools-layer-items {
+      font-size: 15px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--sp-xs);
+    }
+
+    .tools-layer-note {
+      font-size: 13px;
+      color: var(--color-border);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .tools-layer--frontier .tools-layer-header {
+      background: rgba(37,36,34,0.04);
+    }
+
+    .tools-layer--frontier .tools-layer-num {
+      background: var(--color-accent);
+    }
+
+    /* =============================================
+       PRINT STYLES
+       ============================================= */
+    @media print {
+      html, body {
+        background: #fff;
+        font-size: 13px;
+      }
+
+      .cover {
+        padding: 48px 40px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .section {
+        padding: 28px 0;
+      }
+
+      .section--shaded {
+        padding: 28px 32px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .callout,
+      .luzia-card,
+      .investment-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .footer {
+        margin-top: 32px;
+        padding: 32px 40px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* Evitar cortes dentro de cards */
+      .schedule-row,
+      .step-item,
+      .tool-card,
+      .investment-card {
+        break-inside: avoid;
+      }
+
+      .luzia-card,
+      .callout {
+        break-inside: avoid;
+      }
+    }
+
+    /* =============================================
+       RESPONSIVO
+       ============================================= */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 var(--sp-md);
+      }
+
+      .cover {
+        padding: var(--sp-xl) var(--sp-md);
+      }
+
+      .cover-meta {
+        gap: var(--sp-md);
+      }
+
+      .section--shaded {
+        padding: var(--sp-lg) var(--sp-md);
+        margin: var(--sp-lg) var(--sp-sm);
+        border-radius: var(--radius);
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .luzia-card {
+        grid-template-columns: 1fr;
+        padding: var(--sp-lg) var(--sp-md);
+      }
+
+      .luzia-icon-wrap {
+        width: 60px;
+        height: 60px;
+      }
+
+      .triad-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .investment-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: var(--sp-md);
+      }
+
+      .footer-location {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .schedule-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .triad-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       PORTADA
+       ============================================================ -->
+  <section class="cover">
+    <div class="cover-inner">
+
+      <!-- Logo -->
+      <div class="cover-logo">
+        <img src="data:image/png;base64,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" alt="Zuriel Sistemas" style="height:50px;width:auto;display:block;">
+      </div>
+
+      <div class="cover-badge">Propuesta Formativa</div>
+
+      <h1 class="cover-title">Taller de Introducción a la Inteligencia Artificial</h1>
+
+      <p class="cover-subtitle">Al servicio de la educación integral y la persona</p>
+
+      <p class="cover-purpose">
+        "Una jornada formativa para equipar al equipo docente con las herramientas del presente"
+      </p>
+
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Preparado por</span>
+          <span class="cover-meta-value">Zuriel Sistemas</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Para</span>
+          <span class="cover-meta-value">Liceo Los Robles</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Contacto</span>
+          <span class="cover-meta-value">Andrés Rincón</span>
+        </div>
+        <div class="cover-meta-item">
+          <span class="cover-meta-label">Fecha</span>
+          <span class="cover-meta-value">Abril 2026</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CUERPO PRINCIPAL
+       ============================================================ -->
+  <main class="container">
+
+    <!-- SECCIÓN 2 — El desafío del educador -->
+    <section class="section">
+      <div class="section-header">
+        <span class="accent-line"></span>
+        <span class="label">Contexto</span>
+        <h2 class="section-title">El desafío del educador hoy</h2>
+      </div>
+
+      <div class="section-body">
+        <p>Cada docente enfrenta hoy, de manera simultánea, tres preguntas que antes eran teóricas y ahora son urgentes: <strong>¿Qué es realmente la inteligencia artificial?</strong> ¿Cómo la están usando mis estudiantes — y cómo debería hablar con ellos sobre eso? ¿Y yo, cómo puedo usarla para ser mejor en mi vocación?</p>
+
+        <p>En un colegio como Los Robles — con laboratorios, proyectos interdisciplinarios y un alto estándar académico — la presión por mantenerse al día es mayor. Y la responsabilidad también, porque los docentes no solo enseñan contenidos: forman personas.</p>
+
+        <p>La inteligencia artificial no es una amenaza para el educador cristiano. Es una herramienta que, <strong>bien comprendida y bien usada</strong>, potencia su vocación. Este taller existe para cerrar esa brecha: entre la IA que existe y la IA que el equipo docente conoce y puede usar con criterio.</p>
+      </div>
+    </section>
+
+    <!-- CALLOUT FRAMING -->
+    <div class="callout">
+      <p class="callout-text">
+        "La tecnología no reemplaza al maestro. Pero el maestro que <strong>comprende y usa bien la tecnología</strong> sí puede transformar su impacto. Eso es lo que queremos lograr juntos."
+      </p>
+    </div>
+
+    <!-- SECCIÓN 3 — El taller -->
+    <section class="section">
+      <div class="section-header">
+        <span class="accent-line"></span>
+        <span class="label">El Programa</span>
+        <h2 class="section-title">El Taller</h2>
+      </div>
+
+      <div class="section-body" style="margin-bottom: 24px;">
+        <p>Una <strong>jornada intensiva de 4 horas</strong> diseñada específicamente para equipos educativos no técnicos. Sin jerga. Sin demos imposibles. Con aplicaciones reales que se pueden usar desde el lunes siguiente.</p>
+      </div>
+
+      <div class="schedule-grid" role="list">
+
+        <div class="schedule-row" role="listitem">
+          <div class="schedule-time">8:00 – 9:00 am</div>
+          <div>
+            <div class="schedule-content-label">Bloque 1</div>
+            <div class="schedule-content-title">Historia y desmitificación de la IA</div>
+          </div>
+        </div>
+
+        <div class="schedule-row" role="listitem">
+          <div class="schedule-time">9:00 – 10:00 am</div>
+          <div>
+            <div class="schedule-content-label">Bloque 2</div>
+            <div class="schedule-content-title">Ecosistema de herramientas prácticas para docentes</div>
+          </div>
+        </div>
+
+        <div class="schedule-row schedule-row--break" role="listitem">
+          <div class="schedule-time">10:00 – 10:30 am</div>
+          <div>
+            <div class="schedule-content-label">Receso</div>
+            <div class="schedule-content-title" style="color: var(--color-text-secondary); font-weight: 400;">Pausa y espacio de conversación</div>
+          </div>
+        </div>
+
+        <div class="schedule-row" role="listitem">
+          <div class="schedule-time">10:30 – 11:30 am</div>
+          <div>
+            <div class="schedule-content-label">Bloque 3</div>
+            <div class="schedule-content-title">Comunicación estratégica con la IA</div>
+          </div>
+        </div>
+
+        <div class="schedule-row" role="listitem">
+          <div class="schedule-time">11:30 – 12:00 pm</div>
+          <div>
+            <div class="schedule-content-label">Bloque 4</div>
+            <div class="schedule-content-title">IA, formación integral y cierre</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4 — Escalera de comunicación -->
+    <div class="section--shaded">
+      <div class="section-header">
+        <span class="accent-line"></span>
+        <span class="label">Bloque 3 — Metodología</span>
+        <h2 class="section-title">Tres niveles para comunicarse con la IA</h2>
+      </div>
+
+      <div class="section-body" style="margin-bottom: 24px;">
+        <p>No toda interacción con la IA tiene el mismo nivel de intención ni produce los mismos resultados. Este bloque presenta una escalera de tres niveles que va desde la conversación espontánea hasta la arquitectura de colaboración.</p>
+      </div>
+
+      <div class="comm-levels">
+
+        <div class="comm-level-card">
+          <div class="comm-level-number">1</div>
+          <div class="comm-level-body">
+            <div class="comm-level-title">Lenguaje natural</div>
+            <div class="comm-level-desc">Preguntas directas, conversación espontánea. El punto de entrada de cualquier persona. La IA responde bien, pero sin garantías de consistencia o precisión.</div>
+          </div>
+        </div>
+
+        <div class="comm-level-card">
+          <div class="comm-level-number">2</div>
+          <div class="comm-level-body">
+            <div class="comm-level-title">Prompting estructurado</div>
+            <div class="comm-level-desc">Instrucciones con parámetros explícitos: rol, objetivo, formato, restricciones. Más intencional, más predecible. El docente controla el resultado con mayor precisión.</div>
+          </div>
+        </div>
+
+        <div class="comm-level-card">
+          <div class="comm-level-number">3</div>
+          <div class="comm-level-body">
+            <div class="comm-level-title">Comunicación estratégica basada en marcos</div>
+            <div class="comm-level-desc">Diseñar cómo la IA te asiste por etapas dentro de un proceso. No es un prompt más ordenado — es arquitectura de colaboración. La IA acompaña cada fase del proceso, no solo responde preguntas sueltas.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECCIÓN 5 — Herramientas -->
+    <section class="section">
+      <div class="section-header">
+        <span class="accent-line"></span>
+        <span class="label">Bloque 2 — Herramientas</span>
+        <h2 class="section-title">El ecosistema de la IA: qué es qué</h2>
+      </div>
+
+      <div class="section-body" style="margin-bottom: var(--sp-md);">
+        <p>Antes de explorar las herramientas, es fundamental entender la distinción entre los tres elementos del ecosistema. Confundirlos es la fuente de la mayoría de los mitos sobre la IA.</p>
+      </div>
+
+      <!-- Triada conceptual -->
+      <div class="triad-grid">
+
+        <div class="triad-card">
+          <div class="triad-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+          </div>
+          <div class="triad-term">Modelo</div>
+          <div class="triad-arrow">el motor</div>
+          <div class="triad-desc">El sistema de inteligencia en sí mismo. Procesa lenguaje y genera respuestas.</div>
+          <div class="triad-example">GPT-4o, Claude 3.5, Gemini…</div>
+        </div>
+
+        <div class="triad-card">
+          <div class="triad-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2a10 10 0 1 0 10 10"/>
+              <path d="M22 2 12 12"/>
+              <path d="M15 2h7v7"/>
+            </svg>
+          </div>
+          <div class="triad-term">Agente</div>
+          <div class="triad-arrow">el actor</div>
+          <div class="triad-desc">Un modelo con capacidad de acción autónoma, memoria y acceso a herramientas externas.</div>
+          <div class="triad-example">Claude Code, agentes de automatización…</div>
+        </div>
+
+        <div class="triad-card">
+          <div class="triad-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <div class="triad-term">Herramienta</div>
+          <div class="triad-arrow">la interfaz</div>
+          <div class="triad-desc">La aplicación con la que el usuario interactúa. Puede usar uno o varios modelos por dentro.</div>
+          <div class="triad-example">ChatGPT, Copilot, Perplexity…</div>
+        </div>
+
+      </div>
+
+      <div class="triad-insight">
+        <strong>ChatGPT no es la IA</strong> — es una ventana hacia un modelo. Entender esta diferencia cambia cómo piensas el ecosistema y cómo eliges las herramientas adecuadas para cada tarea.
+      </div>
+
+      <!-- Capas de herramientas -->
+      <div class="section-body" style="margin-top: var(--sp-lg); margin-bottom: var(--sp-sm);">
+        <p>El taller presenta el ecosistema en tres capas, desde lo cotidiano hasta la frontera:</p>
+      </div>
+
+      <div class="tools-layers">
+
+        <!-- Capa 1 -->
+        <div class="tools-layer">
+          <div class="tools-layer-header">
+            <div class="tools-layer-num">1</div>
+            <span class="tools-layer-title">Asistentes y herramientas cotidianas</span>
+          </div>
+          <div class="tools-layer-body">
+            <div class="tools-layer-items">Microsoft Copilot &middot; ChatGPT &middot; Claude &middot; Gemini</div>
+            <div class="tools-layer-note">Los modelos principales y sus interfaces. Accesibles hoy, con aplicaciones directas para redacción, planificación y comunicación.</div>
+          </div>
+        </div>
+
+        <!-- Capa 2 -->
+        <div class="tools-layer">
+          <div class="tools-layer-header">
+            <div class="tools-layer-num">2</div>
+            <span class="tools-layer-title">Herramientas educativas de vanguardia</span>
+          </div>
+          <div class="tools-layer-body">
+            <div class="tools-layer-items">
+              <strong>MagicSchool AI</strong> — planificación de clases, rúbricas, diferenciación curricular<br>
+              <strong>Khanmigo</strong> (Khan Academy) — tutor conversacional para estudiantes<br>
+              <strong>Diffit</strong> — adaptar materiales a distintos niveles de lectura<br>
+              <strong>NotebookLM</strong> (Google) — síntesis de documentos y fuentes curriculares<br>
+              <strong>Curipod</strong> — generación de lecciones interactivas
+            </div>
+            <div class="tools-layer-note">Diseñadas específicamente para el ámbito educativo, con adopción real en instituciones de todo el mundo.</div>
+          </div>
+        </div>
+
+        <!-- Capa 3 -->
+        <div class="tools-layer tools-layer--frontier">
+          <div class="tools-layer-header">
+            <div class="tools-layer-num">3</div>
+            <span class="tools-layer-title">La frontera: agentes autónomos</span>
+          </div>
+          <div class="tools-layer-body">
+            <div class="tools-layer-items">La IA ya puede actuar de forma autónoma — no solo responde, sino que ejecuta tareas completas sin intervención paso a paso.</div>
+            <div class="tools-layer-note">Esta capa se presenta como "hacia dónde va la tecnología", no como algo que el docente deba usar hoy. El objetivo es que el equipo entienda el horizonte y pueda leer con criterio las noticias sobre IA que ya están llegando.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tools-note">
+        Cada herramienta se presenta con un caso de uso real — no como demo abstracta, sino como práctica concreta aplicable desde el día siguiente al taller.
+      </div>
+    </section>
+
+    <!-- SECCIÓN 6 — LuzIA -->
+    <section class="section">
+      <div class="section-header">
+        <span class="accent-line"></span>
+        <span class="label">Experiencia</span>
+        <h2 class="section-title">LuzIA — tu guía digital</h2>
+      </div>
+
+      <div class="luzia-card" style="margin-top: 24px;">
+        <div class="luzia-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="luzia-content">
+          <div class="luzia-name">LuzIA</div>
+          <div class="luzia-tagline">Asistente digital del taller</div>
+          <ul class="luzia-bullets">
+            <li>Al inicio del taller, cada participante escanea un código QR para activarla en su teléfono</li>
+            <li>Guía paso a paso, responde dudas y entrega los materiales durante la sesión</li>
+            <li>Los docentes viven de primera mano cómo funciona un chatbot bien diseñado — la mejor forma de entender la IA es usarla</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 7 — Adaptado al cliente -->
+    <div class="section--shaded">
+      <div class="section-header">
+        <span class="accent-line"></span>
+        <span class="label">Personalización</span>
+        <h2 class="section-title">Diseñado para Los Robles</h2>
+      </div>
+
+      <div class="section-body" style="margin-bottom: 24px;">
+        <p>Este taller no es genérico. Cada elemento se adapta al contexto, los desafíos y la cultura institucional del cliente antes de la entrega. La sesión de briefing previa es parte del proceso.</p>
+      </div>
+
+      <ul class="custom-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span><strong>Framing inicial</strong> — el encuadre del taller se ajusta al contexto y los desafíos particulares del equipo docente de la institución</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span><strong>Ejemplos prácticos</strong> — los casos de uso se seleccionan según el sector, los roles presentes y los flujos de trabajo reales del cliente</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span><strong>Sección de impacto</strong> — los casos de transformación presentados reflejan instituciones del mismo sector e industria del cliente</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span><strong>Cierre temático</strong> — la reflexión de cierre se alinea a los valores institucionales y la misión del cliente, no a un guión genérico</span>
+        </li>
+      </ul>
+
+      <div class="close-callout">
+        <p>"La IA en la formación integral — reflexión final sobre cómo la inteligencia artificial, bien usada, sirve a la misión de un colegio que no solo forma mentes, sino personas completas."</p>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 8 — Inversión -->
+    <section class="section">
+      <div class="section-header">
+        <span class="accent-line"></span>
+        <span class="label">Inversión</span>
+        <h2 class="section-title">Condiciones</h2>
+      </div>
+
+      <div class="investment-card">
+        <div class="investment-header">
+          <span class="investment-header-title">Taller de Introducción a la IA</span>
+          <span class="investment-header-badge">Jornada de 4 horas</span>
+        </div>
+        <div class="investment-body">
+
+          <div class="investment-row">
+            <div class="investment-field">
+              <span class="investment-field-label">Inversión por sesión</span>
+              <div class="investment-field-value investment-field-value--amount">A convenir</div>
+            </div>
+            <div class="investment-field">
+              <span class="investment-field-label">Modalidad de pago</span>
+              <div class="investment-field-value"> </div>
+            </div>
+          </div>
+
+          <div class="investment-row">
+            <div class="investment-field">
+              <span class="investment-field-label">Participantes</span>
+              <div class="investment-field-value"> </div>
+            </div>
+            <div class="investment-field">
+              <span class="investment-field-label">Fecha tentativa</span>
+              <div class="investment-field-value"> </div>
+            </div>
+          </div>
+
+          <div class="investment-includes">
+            <div class="investment-includes-label">Incluye</div>
+            <div class="includes-list">
+              <span class="includes-tag">Materiales digitales</span>
+              <span class="includes-tag">Acceso a LuzIA</span>
+              <span class="includes-tag">Certificado de participación</span>
+              <span class="includes-tag">Casos personalizados Los Robles</span>
+              <span class="includes-tag">Sesión de briefing previa</span>
+            </div>
+          </div>
+
+          <div class="investment-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Disponible también en modalidad virtual con las mismas funcionalidades e interactividad.
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 9 — Próximos pasos -->
+    <section class="section">
+      <div class="section-header">
+        <span class="accent-line"></span>
+        <span class="label">Para comenzar</span>
+        <h2 class="section-title">Próximos pasos</h2>
+      </div>
+
+      <ol class="steps-list" role="list">
+        <li class="step-item" role="listitem">
+          <div class="step-number" aria-hidden="true"></div>
+          <div class="step-text">Acordar fecha, modalidad y número estimado de participantes</div>
+        </li>
+        <li class="step-item" role="listitem">
+          <div class="step-number" aria-hidden="true"></div>
+          <div class="step-text">Firma de carta de intención y emisión de cotización formal</div>
+        </li>
+        <li class="step-item" role="listitem">
+          <div class="step-number" aria-hidden="true"></div>
+          <div class="step-text">Sesión de briefing de 30 minutos para personalizar los ejemplos y casos del taller</div>
+        </li>
+        <li class="step-item" role="listitem">
+          <div class="step-number" aria-hidden="true"></div>
+          <div class="step-text">Entrega del taller — con LuzIA activada y materiales listos desde el primer momento</div>
+        </li>
+      </ol>
+    </section>
+
+    <div class="divider" aria-hidden="true">
+      <div class="divider-line"></div>
+      <div class="divider-dot"></div>
+      <div class="divider-line"></div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       PIE DE PÁGINA
+       ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+
+      <div>
+        <div class="footer-brand">
+          <img src="data:image/png;base64,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" alt="Zuriel Sistemas" style="height:40px;width:auto;display:block;">
+        </div>
+        <div class="footer-contact">
+          <span>Andrés Rincón</span>
+          <a href="mailto:andres.rincon@zuriel.cloud">andres.rincon@zuriel.cloud</a>
+          <a href="https://zuriel.cloud" target="_blank" rel="noopener noreferrer">zuriel.cloud</a>
+        </div>
+      </div>
+
+      <div class="footer-location">
+        <span>Maracaibo, Venezuela</span>
+        <span style="margin-top:4px;">Abril 2026</span>
+        <span style="margin-top:8px; font-size:11px; color:#5A5650;">Documento confidencial</span>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
